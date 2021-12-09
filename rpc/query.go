@@ -98,3 +98,13 @@ func GetSystemProperties(p websocket.WsConn) (*Properties, error) {
 	err := v.ToAnyThing(&t)
 	return &t, err
 }
+
+func GetAccountAssets(p websocket.WsConn, accountId string) (*[]AssetBalance, error) {
+	var t []AssetBalance
+	v := &JsonRpcResult{}
+	if err := websocket.SendWsRequest(p, v, WraprAssets(rand.Intn(1000), accountId)); err != nil {
+		return nil, err
+	}
+	err := v.ToAnyThing(&t)
+	return &t, err
+}

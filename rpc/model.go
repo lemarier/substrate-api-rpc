@@ -31,6 +31,16 @@ type Properties struct {
 	TokenSymbol   string `json:"tokenSymbol"`
 }
 
+type AssetBalance struct {
+	CurrencyId int `json:"currencyId"`
+	// fix for u128
+	Balance BalanceInfo `json:"balance"`
+}
+
+type BalanceInfo struct {
+	Amount string `json:"amount"`
+}
+
 type Error struct {
 	Code    int         `json:"code"`
 	Message string      `json:"message"`

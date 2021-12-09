@@ -42,6 +42,11 @@ func StateGetMetadata(id int, hash ...string) []byte {
 	return rpc.structureQuery()
 }
 
+func WraprAssets(id int, accountId ...string) []byte {
+	rpc := Param{Id: id, Method: "wrapr_getAccountBalances", Params: accountId}
+	return rpc.structureQuery()
+}
+
 func SystemProperties(id int) []byte {
 	rpc := Param{Id: id, Method: "system_properties", Params: []string{}}
 	return rpc.structureQuery()
