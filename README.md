@@ -4,16 +4,15 @@
 
 - [Install](#Install)
 - [Usage](#Usage)
-   - [Codec](#Codec)
-   - [RPC](#RPC)
+  - [Codec](#Codec)
+  - [RPC](#RPC)
 - [Contributions](#Contributions)
 - [LICENSE](#LICENSE)
-
 
 ## Install
 
 ```
-go get github.com/itering/substrate-api-rpc
+go get github.com/lemarier/substrate-api-rpc
 ```
 
 ## Usage
@@ -52,10 +51,9 @@ raw := "0x2efb"
 storage.Decode(raw, "i16", nil)
 ```
 
-
 ### RPC
 
-#### Substrate RPC 
+#### Substrate RPC
 
 Example
 
@@ -74,7 +72,6 @@ validatorList := validatorsRaw.ToStringSlice()
 ```
 
 More information can be viewed https://polkadot.js.org/api/substrate/rpc.html
-
 
 ## Contributions
 

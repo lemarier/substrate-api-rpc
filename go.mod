@@ -1,4 +1,4 @@
-module github.com/itering/substrate-api-rpc
+module github.com/lemarier/substrate-api-rpc
 
 go 1.12
 

@@ -2,11 +2,12 @@ package rpc
 
 import (
 	"fmt"
-	"github.com/itering/substrate-api-rpc/storage"
-	"github.com/itering/substrate-api-rpc/storageKey"
-	"github.com/itering/substrate-api-rpc/util"
-	"github.com/itering/substrate-api-rpc/websocket"
 	"math/rand"
+
+	"github.com/lemarier/substrate-api-rpc/storage"
+	"github.com/lemarier/substrate-api-rpc/storageKey"
+	"github.com/lemarier/substrate-api-rpc/util"
+	"github.com/lemarier/substrate-api-rpc/websocket"
 )
 
 // Read substrate storage
@@ -28,6 +29,20 @@ func ReadStorage(p websocket.WsConn, module, prefix string, hash string, arg ...
 
 func ReadKeysPaged(p websocket.WsConn, module, prefix string) (r []string, scale string, err error) {
 	key := storageKey.EncodeStorageKey(module, prefix)
+	v := &JsonRpcResult{}
+	if err = websocket.SendWsRequest(p, v, StateGetKeysPaged(rand.Intn(10000), util.AddHex(key.EncodeKey))); err != nil {
+		return
+	}
+	if keys, err := v.ToInterfaces(); err == nil {
+		for _, k := range keys {
+			r = append(r, k.(string))
+		}
+	}
+	return r, key.ScaleType, err
+}
+
+func ReadKeysWithArgPaged(p websocket.WsConn, module, prefix string, arg string) (r []string, scale string, err error) {
+	key := storageKey.EncodeStorageKey(module, prefix, arg)
 	v := &JsonRpcResult{}
 	if err = websocket.SendWsRequest(p, v, StateGetKeysPaged(rand.Intn(10000), util.AddHex(key.EncodeKey))); err != nil {
 		return

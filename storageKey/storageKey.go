@@ -4,9 +4,9 @@ import (
 	"strings"
 
 	"github.com/itering/scale.go/types"
-	"github.com/itering/substrate-api-rpc/hasher"
-	"github.com/itering/substrate-api-rpc/metadata"
-	"github.com/itering/substrate-api-rpc/util"
+	"github.com/lemarier/substrate-api-rpc/hasher"
+	"github.com/lemarier/substrate-api-rpc/metadata"
+	"github.com/lemarier/substrate-api-rpc/util"
 )
 
 type StorageKey struct {
