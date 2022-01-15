@@ -8,7 +8,10 @@ import (
 	"github.com/lemarier/substrate-api-rpc/pkg/recws"
 )
 
-var wsEndPoint = ""
+var (
+	wsEndPoint = ""
+	maxCap     = 25
+)
 
 type WsConn interface {
 	Dial(urlStr string, reqHeader http.Header)
@@ -32,13 +35,13 @@ func Init(options ...Option) (*PoolConn, error) {
 				ReadTimeout:      time.Second * 2,
 				NonVerbose:       true,
 				HandshakeTimeout: time.Second}
-			SubscribeConn.Dial(wsEndPoint, nil)
 			for _, o := range options {
 				o.Apply(SubscribeConn)
 			}
+			SubscribeConn.Dial(wsEndPoint, nil)
 			return SubscribeConn, err
 		}
-		if wsPool, err = NewChannelPool(1, 25, factory); err != nil {
+		if wsPool, err = NewChannelPool(1, maxCap, factory); err != nil {
 			fmt.Println("NewChannelPool", err)
 		}
 	}
@@ -51,6 +54,11 @@ func Init(options ...Option) (*PoolConn, error) {
 
 func SetEndpoint(endpoint string) {
 	wsEndPoint = endpoint
+}
+
+// SetChannelPoolMaxCap set connection pool max cap
+func SetChannelPoolMaxCap(max int) {
+	maxCap = max
 }
 
 func Close() {
